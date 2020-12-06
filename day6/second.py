@@ -1,4 +1,5 @@
 groups = open("input.txt", "rt").read().split("\n\n")
+groups[len(groups) - 1] = groups[len(groups) - 1][:-1]
 questions_sum = 0
 
 for group in groups:
