@@ -20,3 +20,4 @@ def decode_xmas(preamble_size):
 
 
 print(decode_xmas(25))
+# >>> 556543474

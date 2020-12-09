@@ -23,3 +23,4 @@ def find_encryption_weakness(number):
 
 
 print(find_encryption_weakness(556543474))
+# >>> 76096372
