@@ -1,4 +1,4 @@
-with open("testinput.txt") as inp:
+with open("input.txt") as inp:
     earliest_time = int(inp.readline()[:-1])
     raw_bus_ids = inp.readline()[:-1].split(',')
 
@@ -18,3 +18,4 @@ for bus_id in bus_ids:
         earliest_bus_time = earliest_time
 
 print(earliest_bus_id * (earliest_bus_time - earliest_time))
+# >>> 5257
