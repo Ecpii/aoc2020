@@ -1,31 +1,36 @@
-with open("input.txt") as inp:
+with open("testinput6.txt") as inp:
     inp.readline()
     raw_bus_ids = inp.readline()[:-1].split(',')
 
-bus_ids = []
+max_bus_id = 0
+max_bus_index = 0
+relative_bus_id_dict = dict()
 
 for raw_bus_id in raw_bus_ids:
     try:
-        bus_ids.append(int(raw_bus_id))
+        if int(raw_bus_id) > max_bus_id:
+            max_bus_id = int(raw_bus_id)
+            max_bus_index = raw_bus_ids.index(raw_bus_id)
     except ValueError:
-        bus_ids.append(raw_bus_id)
+        continue
+
+for i in range(len(raw_bus_ids)):
+    if raw_bus_ids[i] != 'x':
+        relative_bus_id_dict[int(raw_bus_ids[i])] = i - max_bus_index
 
 
 def check_other_times(timestamp):
-    for i in range(1, len(bus_ids)):
-        bus_id = bus_ids[i]
-        if bus_id == 'x':
-            continue
-        if (timestamp // bus_id + (1 if timestamp % bus_id != 0 else 0)) \
-                * bus_id % timestamp != i:
+    for bus_id in relative_bus_id_dict:
+        if (timestamp // bus_id + (1 if relative_bus_id_dict[bus_id] > 0 else 0)) * bus_id \
+                - timestamp != relative_bus_id_dict[bus_id]:
             return False
     return True
 
 
-possible_time = 100000000000000 // bus_ids[0] * bus_ids[0]
+possible_time = 0
 while True:
-    possible_time += bus_ids[0]
+    possible_time += max_bus_id
     if check_other_times(possible_time):
         break
 
-print(possible_time)
+print(possible_time - max_bus_index)
