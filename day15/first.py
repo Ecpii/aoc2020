@@ -3,7 +3,7 @@ with open("input.txt") as inp:
 numbers = list(map(lambda instruction: int(instruction), starting_instructions))
 last_spoken_indices = {numbers[i]: i for i in range(len(numbers))}
 
-for i in range(len(numbers) - 1, 2019):
+for i in range(len(numbers) - 1, 29999999):
     try:
         numbers.append(i - last_spoken_indices[numbers[i]])
     except KeyError:
@@ -12,3 +12,4 @@ for i in range(len(numbers) - 1, 2019):
 
 print(numbers[-1])
 # >>> 706
+# >>> 19331
