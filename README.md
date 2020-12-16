@@ -1,4 +1,4 @@
-#Status
+# Status
 
 | Day  | Part 1 | Part 2 |
 | ---  |:------:|:------:|
