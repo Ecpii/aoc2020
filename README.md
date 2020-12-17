@@ -16,8 +16,8 @@
 | 12   | done   | done   |
 | 13   | done   | **nope**|
 | 14   | done   | done   |
-| 15   |        |        |
-| 16   |        |        |
+| 15   | done   | done   |
+| 16   | done   |        |
 | 17   |        |        |
 | 18   |        |        |
 | 19   |        |        |
