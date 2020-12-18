@@ -14,6 +14,7 @@ pocket_dim = {0: {j: {i: True if initial_state[j][i] == '#' else False for i in 
 
 
 def pretty_print(dimension):
+    num_active = 0
     min_z, min_y, min_x = 0, 0, 0
     max_z, max_y, max_x = 0, 0, 0
     for z_coord in dimension:
@@ -36,20 +37,24 @@ def pretty_print(dimension):
         for j in range(min_y, max_y + 1):
             for i in range(min_x, max_x + 1):
                 try:
-                    print('#' if dimension[k][j][i] else '.', end='')
+                    if dimension[k][j][i]:
+                        print('#', end='')
+                        num_active += 1
+                    else:
+                        print('.', end='')
                 except KeyError:
                     print('.', end='')
             print()
+    print(f"{num_active = }")
 
 
-pretty_print(pocket_dim)
-
-for i in range(1):
+for i in range(6):
+    print(f"\n--- Round {i + 1} ---")
     active_neighbors = {}
     prev_pocket = copy.deepcopy(pocket_dim)
-    for z in range(len(prev_pocket)):
-        for y in range(len(prev_pocket[z])):
-            for x in range(len(prev_pocket[z][y])):
+    for z in prev_pocket:
+        for y in prev_pocket[z]:
+            for x in prev_pocket[z][y]:
                 if prev_pocket[z][y][x]:
                     for neighbor_offset in neighbor_offsets:
                         new_z = z + neighbor_offset[0]
@@ -59,7 +64,6 @@ for i in range(1):
                             active_neighbors[(new_z, new_y, new_x)] += 1
                         except KeyError:
                             active_neighbors[(new_z, new_y, new_x)] = 1
-    print(f"{active_neighbors = }")
 
     for coords in active_neighbors:
         is_active = False
