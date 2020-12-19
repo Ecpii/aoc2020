@@ -34,16 +34,18 @@ def pretty_print(dimension):
                     max_x = x_coord
     for k in range(min_z, max_z + 1):
         print(f"\nz = {k}")
+        print(' ', *[abs(foo) for foo in range(min_x, max_x + 1)], sep=' ')
         for j in range(min_y, max_y + 1):
+            print(f"{abs(j)}", end=' ')
             for i in range(min_x, max_x + 1):
                 try:
                     if dimension[k][j][i]:
-                        print('#', end='')
+                        print('#', end=' ')
                         num_active += 1
                     else:
-                        print('.', end='')
+                        print('.', end=' ')
                 except KeyError:
-                    print('.', end='')
+                    print('.', end=' ')
             print()
     print(f"{num_active = }")
 
@@ -66,14 +68,14 @@ for i in range(6):
                             active_neighbors[(new_z, new_y, new_x)] = 1
 
     for coords in active_neighbors:
-        is_active = False
-        is_oob = False
+        active = False
+        oob = False
         try:
-            is_active = prev_pocket[coords[0]][coords[1]][coords[2]]
+            active = prev_pocket[coords[0]][coords[1]][coords[2]]
         except KeyError:
-            is_oob = True
-        if is_active and active_neighbors[coords] not in {2, 3}:
-            if not is_oob:
+            oob = True
+        if active and active_neighbors[coords] not in {2, 3}:
+            if not oob:
                 pocket_dim[coords[0]][coords[1]][coords[2]] = False
             else:
                 if coords[0] not in pocket_dim:
@@ -82,8 +84,8 @@ for i in range(6):
                     pocket_dim[coords[0]][coords[1]] = {coords[2]: False}
                 else:
                     pocket_dim[coords[0]][coords[1]][coords[2]] = False
-        elif not is_active and (active_neighbors[coords] == 3):
-            if not is_oob:
+        elif not active and (active_neighbors[coords] == 3):
+            if not oob:
                 pocket_dim[coords[0]][coords[1]][coords[2]] = True
             else:
                 if coords[0] not in pocket_dim:
@@ -94,4 +96,3 @@ for i in range(6):
                     pocket_dim[coords[0]][coords[1]][coords[2]] = True
 
     pretty_print(pocket_dim)
-
