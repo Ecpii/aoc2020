@@ -1,6 +1,6 @@
 import copy
 
-with open("testinput.txt") as inp:
+with open("input.txt") as inp:
     initial_state = inp.read().split("\n")[:-1]
 
 neighbor_offsets = []
@@ -58,6 +58,11 @@ for i in range(6):
         for y in prev_pocket[z]:
             for x in prev_pocket[z][y]:
                 if prev_pocket[z][y][x]:
+                    try:
+                        active_neighbors[(z, y, x)]
+                    except KeyError:
+                        active_neighbors[(z, y, x)] = 0
+
                     for neighbor_offset in neighbor_offsets:
                         new_z = z + neighbor_offset[0]
                         new_y = y + neighbor_offset[1]
@@ -74,6 +79,7 @@ for i in range(6):
             active = prev_pocket[coords[0]][coords[1]][coords[2]]
         except KeyError:
             oob = True
+
         if active and active_neighbors[coords] not in {2, 3}:
             if not oob:
                 pocket_dim[coords[0]][coords[1]][coords[2]] = False
@@ -84,7 +90,7 @@ for i in range(6):
                     pocket_dim[coords[0]][coords[1]] = {coords[2]: False}
                 else:
                     pocket_dim[coords[0]][coords[1]][coords[2]] = False
-        elif not active and (active_neighbors[coords] == 3):
+        elif not active and active_neighbors[coords] == 3:
             if not oob:
                 pocket_dim[coords[0]][coords[1]][coords[2]] = True
             else:
@@ -96,3 +102,4 @@ for i in range(6):
                     pocket_dim[coords[0]][coords[1]][coords[2]] = True
 
     pretty_print(pocket_dim)
+# >>> 293
