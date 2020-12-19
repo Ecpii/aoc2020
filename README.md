@@ -18,7 +18,7 @@
 | 14   | done   | done   |
 | 15   | done   | done   |
 | 16   | done   | done   |
-| 17   | done   |        |
+| 17   | done   | done   |
 | 18   |        |        |
 | 19   |        |        |
 | 20   |        |        |
