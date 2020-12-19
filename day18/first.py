@@ -3,28 +3,14 @@ with open('input.txt') as inp:
 
 
 def find_matching_paren(expression):
-    curr_depth = 1
-    curr_index = 0
-    expression = expression[1:]
-    while curr_depth != 0:
-        curr_index += 1
-        if '(' in expression:
-            next_opening_paren_index = expression.index('(')
-        else:
-            next_opening_paren_index = 99
-        if ')' in expression:
-            next_closing_paren_index = expression.index(')')
-        else:
-            next_closing_paren_index = 99
-        if next_opening_paren_index < next_closing_paren_index:
+    curr_depth = 0
+    for curr_index in range(len(expression)):
+        if expression[curr_index] == '(':
             curr_depth += 1
-            curr_index += next_opening_paren_index
-            expression = expression[next_opening_paren_index + 1:]
-        else:
+        elif expression[curr_index] == ')':
             curr_depth -= 1
-            curr_index += next_closing_paren_index
-            expression = expression[next_closing_paren_index + 1:]
-    return curr_index
+        if curr_depth == 0:
+            return curr_index
 
 
 def evaluate_exp(problem, operation, accumulator):
@@ -33,6 +19,7 @@ def evaluate_exp(problem, operation, accumulator):
             return accumulator + int(problem)
         else:
             return accumulator * int(problem)
+
     if problem[0] == '(':
         next_num = evaluate_exp(problem[1:find_matching_paren(problem)], '(', 0)
     else:
