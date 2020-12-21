@@ -49,5 +49,5 @@ valid_messages = 0
 for message in messages:
     if message in valid_strings:
         valid_messages += 1
-print(valid_messages)
+# print(valid_messages)
 # >>> 149
