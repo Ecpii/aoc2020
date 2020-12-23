@@ -21,7 +21,7 @@
 | 17   | done     | done     |
 | 18   | done     | done     |
 | 19   | done     | done     |
-| 20   | done     | wip      |
+| 20   | done     | done     |
 | 21   |          |          |
 | 22   |          |          |
 | 23   |          |          |
