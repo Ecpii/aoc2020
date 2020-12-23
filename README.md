@@ -23,7 +23,7 @@
 | 19   | done     | done     |
 | 20   | done     | done     |
 | 21   | done     | done     |
-| 22   |          |          |
+| 22   | done     |          |
 | 23   |          |          |
 | 24   |          |          |
 | 25   |          |          |
