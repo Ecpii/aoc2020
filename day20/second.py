@@ -77,47 +77,25 @@ def pretty_print_image(tile_id: int) -> None:
 def build_row(row_num: int) -> None:
     previous_tile_id = tile_orientation[row_num][-1]
     while edge_matches[previous_tile_id][3]:
-        next_tile_id = edge_matches[previous_tile_id][3]
+        current_tile_id = edge_matches[previous_tile_id][3]
+        index_difference = 5 - edge_matches[current_tile_id].index(previous_tile_id)
 
-        for instruction in tile_change_instructions:
-            rotate(next_tile_id, instruction[0])
-            if instruction[1]:
-                flip_tile(next_tile_id, instruction[2])
-
-            pretty_print(next_tile_id)
-            if edge_matches[next_tile_id][1] == previous_tile_id:
-                if row_num == 0 and not edge_matches[next_tile_id][0] or \
-                        row_num in range(1, image_tile_length - 1) or \
-                        row_num == image_tile_length - 1 and not edge_matches[next_tile_id][2]:
-                    tile_orientation[row_num].append(next_tile_id)
-                    break
-
-            # if not a good orientation, revert changes
-            rotate(next_tile_id, 360 - instruction[0])
-            if instruction[1]:
-                flip_tile(next_tile_id, instruction[2])
+        rotate(current_tile_id, index_difference * 90 % 360)
+        if tile_edges[current_tile_id][1] != tile_edges[previous_tile_id][3]:
+            flip_tile(current_tile_id, False)
+        tile_orientation[row_num].append(current_tile_id)
         previous_tile_id = tile_orientation[row_num][-1]
 
 
 def orient_first_tile(row_num: int) -> None:
     previous_row_start_id = tile_orientation[row_num - 1][0]
     first_tile_id = edge_matches[previous_row_start_id][2]
+    index_difference = 4 - edge_matches[first_tile_id].index(previous_row_start_id)
 
-    for instruction in tile_change_instructions:
-        rotate(first_tile_id, instruction[0])
-        if instruction[1]:
-            flip_tile(first_tile_id, instruction[2])
-
-        pretty_print(first_tile_id)
-
-        if edge_matches[first_tile_id][0] == previous_row_start_id \
-                and not edge_matches[first_tile_id][1]:
-            tile_orientation[row_num].append(first_tile_id)
-            return
-        # if not a good orientation, revert changes
-        rotate(first_tile_id, 360 - instruction[0])
-        if instruction[1]:
-            flip_tile(first_tile_id, instruction[2])
+    rotate(first_tile_id, index_difference * 90 % 360)
+    if edge_matches[first_tile_id][1]:
+        flip_tile(first_tile_id, True)
+    tile_orientation[row_num].append(first_tile_id)
 
 
 def build_image(orientation: list) -> list:
@@ -131,22 +109,10 @@ def build_image(orientation: list) -> list:
     return final_image
 
 
-tile_change_instructions = [
-    # (degrees, flip, horizontal)
-    (0, False, False),
-    (90, False, False),
-    (180, False, False),
-    (270, False, False),
-    (0, True, False),
-    (0, True, True),
-    (90, True, False),
-    (90, True, True)
-]
-
 first_corner_id = 0
-for tile_id in edge_matches:
-    if edge_matches[tile_id].count(None) == 2:
-        first_corner_id = tile_id
+for edge_tile_id in edge_matches:
+    if edge_matches[edge_tile_id].count(None) == 2:
+        first_corner_id = edge_tile_id
         break
 
 # rotate the first tile until the left and upper sides are the ones without matches

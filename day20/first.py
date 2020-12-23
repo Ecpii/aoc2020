@@ -1,4 +1,4 @@
-with open('testinput.txt') as inp:
+with open('input.txt') as inp:
     raw_tiles = inp.read().split("\n\n")
 
 raw_tiles[-1] = raw_tiles[-1][:-1]
