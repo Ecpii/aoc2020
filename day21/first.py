@@ -29,7 +29,8 @@ for allergen in possible_allergen_map:
     possible_allergen_ingredients |= possible_allergen_map[allergen]
 
 previous_allergen_map = {}
-while previous_allergen_map != possible_allergen_map:
+num_stale_passes = 0
+while num_stale_passes < 2:
     previous_allergen_map = copy.deepcopy(possible_allergen_map)
     for allergen in possible_allergen_map:
         if len(possible_allergen_map[allergen]) == 1:
@@ -41,6 +42,8 @@ while previous_allergen_map != possible_allergen_map:
         if shared_ingredients:
             for shared_ingredient in shared_ingredients:
                 possible_allergen_map[allergen].discard(shared_ingredient)
+    if previous_allergen_map == possible_allergen_map:
+        num_stale_passes += 1
 
 allergen_ingredient_sum = 0
 safe_ingredients = all_ingredients - possible_allergen_ingredients
@@ -50,5 +53,5 @@ for item_nutritional_info in raw_nutritional_info:
         if ingredient in safe_ingredients:
             allergen_ingredient_sum += 1
 
-print(allergen_ingredient_sum)
+# print(allergen_ingredient_sum)
 # >>> 2307
