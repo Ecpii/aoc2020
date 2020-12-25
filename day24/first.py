@@ -27,7 +27,7 @@ class Tile:
         for y in cls.grid:
             if min(cls.grid[y]) < min_x:
                 min_x = min(cls.grid[y])
-            elif max(cls.grid[y]) > max_x:
+            if max(cls.grid[y]) > max_x:
                 max_x = max(cls.grid[y])
 
         # first row for the reference numbers
@@ -38,13 +38,14 @@ class Tile:
 
         # other rows
         for y in range(min_y, max_y + 1):
-            print(str(abs(y)) + ('   ' if y % 2 else ' '), end='')
+            y_is_even = not y % 2
+            print(str(abs(y)), end=(' ' if y_is_even else '   '))
             if y in cls.grid:
-                for x in range(min(cls.grid[y]), max(cls.grid[y]) + 1):
+                for x in range(min_x, max_x + 1):
                     if x in cls.grid[y]:
                         print('.' if cls.grid[y][x].is_white else '#', end='   ')
-                    elif not x + (1 if y % 2 else 0) % 2:
-                        print('.', end='   ')
+                    elif (x + int(not y_is_even)) % 2 == 0:
+                        print('_', end='   ')
                 print()
         print(f'Number of black tiles: {cls.num_black_tiles}')
 
@@ -102,5 +103,5 @@ Tile.grid[0][0] = starting_tile
 for instruction in instructions:
     starting_tile.follow_chain(instruction)
 
-Tile.pretty_print()
+# Tile.pretty_print()
 # >>> 528

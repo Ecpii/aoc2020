@@ -25,5 +25,5 @@
 | 21   | done     | done     |
 | 22   | done     | done     |
 | 23   | done     | **nope** |
-| 24   | done     |          |
+| 24   | done     | done     |
 | 25   |          |          |
