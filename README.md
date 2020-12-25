@@ -26,4 +26,4 @@
 | 22   | done     | done     |
 | 23   | done     | **nope** |
 | 24   | done     | done     |
-| 25   | wip      |          |
+| 25   | done     |          |
