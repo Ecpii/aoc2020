@@ -35,5 +35,5 @@ def conway_day():
 
 for i in range(100):
     conway_day()
-print(Tile.num_black_tiles)
+Tile.pretty_print()
 # >>> 4200

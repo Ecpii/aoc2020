@@ -1,4 +1,4 @@
-with open('input.txt') as inp:
+with open('testinput.txt') as inp:
     instructions = inp.read().split('\n')[:-1]
 
 
@@ -30,22 +30,28 @@ class Tile:
             if max(cls.grid[y]) > max_x:
                 max_x = max(cls.grid[y])
 
+        max_y_length = max(len(str(min_y)), len(str(max_y)))
+        max_x_length = max(len(str(min_x)), len(str(max_x)))
+        x_reference_numbers = [f'{num: {max_x_length}}' for num in range(min_x, max_x + 1)]
+
         # first row for the reference numbers
-        print('  ', end='')
-        for x in range(min_x, max_x + 1):
-            print(abs(x), end=' ')
-        print()
+        for i in range(max_x_length):
+            print(' ' * (max_y_length + 2), end='')
+            for reference_num in x_reference_numbers:
+                print(reference_num[i], end=' ')
+            print()
 
         # other rows
         for y in range(min_y, max_y + 1):
             y_is_even = not y % 2
-            print(str(abs(y)), end=(' ' if y_is_even else '   '))
+            print(f'{y: {max_y_length}}', end=(' ' if y_is_even else '   '))
             if y in cls.grid:
                 for x in range(min_x, max_x + 1):
                     if x in cls.grid[y]:
-                        print('.' if cls.grid[y][x].is_white else '#', end='   ')
+                        print('\033[1;30;47m . ' if cls.grid[y][x].is_white else '\033[1;37;40m # ',
+                              end='\033[1;0;0m ')
                     elif (x + int(not y_is_even)) % 2 == 0:
-                        print('_', end='   ')
+                        print('\033[1;30;42m _ ', end='\033[1;0;0m ')
                 print()
         print(f'Number of black tiles: {cls.num_black_tiles}')
 
